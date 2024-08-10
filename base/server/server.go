@@ -4,6 +4,7 @@ package PhoeniciaDigitalServer
 import (
 	PhoeniciaDigitalUtils "Phoenicia-Digital-Base-API/base/utils"
 	PhoeniciaDigitalConfig "Phoenicia-Digital-Base-API/config"
+	"Phoenicia-Digital-Base-API/source"
 	"fmt"
 	"log"
 	"net/http"
@@ -40,4 +41,29 @@ func StartServer() {
 }
 
 // Initialize Server Logic
-// func init() {}
+func init() {
+
+	//	HANDLE MESSAGES
+
+	multiplexer.HandleFunc("OPTIONS /message", func(w http.ResponseWriter, r *http.Request) {
+		// Set CORS headers for all requests (can be more specific if needed)
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") // Allow requests from any origin (http://localhost:3000 in your case)
+		// w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	})
+	multiplexer.Handle("GET /message", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.GetCustomerMessagesFromDatabase))
+	multiplexer.Handle("POST /message", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.PostNewMessageToDatabase))
+
+	// HANDLE CONTACTS
+
+	multiplexer.HandleFunc("OPTIONS /contact", func(w http.ResponseWriter, r *http.Request) {
+		// Set CORS headers for all requests (can be more specific if needed)
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") // Allow requests from any origin (http://localhost:3000 in your case)
+		// w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+	})
+	multiplexer.Handle("GET /contact", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.GetContactInfoFromDatabase))
+	multiplexer.Handle("POST /contact", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.PostContactInfoToDatabase))
+}

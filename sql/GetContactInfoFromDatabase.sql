@@ -1,0 +1,1 @@
+SELECT phone_number, email FROM contact_info;

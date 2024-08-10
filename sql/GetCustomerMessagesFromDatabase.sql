@@ -1,0 +1,1 @@
+SELECT name, email, message FROM messages;
