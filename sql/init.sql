@@ -1,7 +1,7 @@
 CREATE TABLE contact_info (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(255),
-    phone_number VARCHAR(20),
+    email VARCHAR(255) UNIQUE,
+    phone_number VARCHAR(20) UNIQUE,
     CONSTRAINT email_or_phone_not_null CHECK (
         email IS NOT NULL OR phone_number IS NOT NULL
     )
