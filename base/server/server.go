@@ -45,25 +45,25 @@ func init() {
 
 	//	HANDLE MESSAGES
 
-	multiplexer.HandleFunc("OPTIONS /message", func(w http.ResponseWriter, r *http.Request) {
+	multiplexer.HandleFunc("OPTIONS /api/message", func(w http.ResponseWriter, r *http.Request) {
 		// Set CORS headers for all requests (can be more specific if needed)
 		w.Header().Set("Access-Control-Allow-Origin", "*") // Allow requests from any origin (http://localhost:3000 in your case)
 		// w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 	})
-	multiplexer.Handle("GET /message", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.GetCustomerMessagesFromDatabase))
-	multiplexer.Handle("POST /message", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.PostNewMessageToDatabase))
+	multiplexer.Handle("GET /api/message", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.GetCustomerMessagesFromDatabase))
+	multiplexer.Handle("POST /api/message", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.PostNewMessageToDatabase))
 
 	// HANDLE CONTACTS
 
-	multiplexer.HandleFunc("OPTIONS /contact", func(w http.ResponseWriter, r *http.Request) {
+	multiplexer.HandleFunc("OPTIONS /api/contact", func(w http.ResponseWriter, r *http.Request) {
 		// Set CORS headers for all requests (can be more specific if needed)
 		w.Header().Set("Access-Control-Allow-Origin", "*") // Allow requests from any origin (http://localhost:3000 in your case)
 		// w.Header().Set("Access-Control-Allow-Credentials", "true")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 	})
-	multiplexer.Handle("GET /contact", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.GetContactInfoFromDatabase))
-	multiplexer.Handle("POST /contact", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.PostContactInfoToDatabase))
+	multiplexer.Handle("GET /api/contact", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.GetContactInfoFromDatabase))
+	multiplexer.Handle("POST /api/contact", PhoeniciaDigitalUtils.PhoeniciaDigitalHandler(source.PostContactInfoToDatabase))
 }
